@@ -28,12 +28,7 @@
      docker_image:
         name: httpd
         source: pull
-#   - name: launching docker container
-#     docker_container:
-#        name: os2
-#        image: httpd
-#        state: started
-#        command: "sleep infinity"
+
    - name: exposing the container
      command:
         cmd: "docker run -dit -p 8000:80 --name os4 httpd"
