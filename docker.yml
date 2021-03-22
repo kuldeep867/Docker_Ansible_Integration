@@ -1,0 +1,39 @@
+- hosts: 192.168.43.59
+  gather_facts: no
+  tasks: 
+   - name: Add repository
+     yum_repository:
+        name: dockerrepo
+        description: dockerrepo YUM repo
+        baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
+        enabled: true 		
+        gpgcheck: no
+
+   - name: start docker service
+     service:
+        name: "docker"
+        state: started
+        enabled: yes
+
+   - name: install python36
+     package: 
+        name: python36
+        state: present
+
+   - name: install docker python library
+     pip:
+        name: docker-py 
+        
+   - name: docker images 
+     docker_image:
+        name: httpd
+        source: pull
+#   - name: launching docker container
+#     docker_container:
+#        name: os2
+#        image: httpd
+#        state: started
+#        command: "sleep infinity"
+   - name: exposing the container
+     command:
+        cmd: "docker run -dit -p 8000:80 --name os4 httpd"
